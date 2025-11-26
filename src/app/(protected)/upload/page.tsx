@@ -11,10 +11,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Loader2, Search, Upload, X, ArrowLeft } from "lucide-react";
+import {
+  Loader2,
+  Search,
+  Upload,
+  X,
+  ArrowLeft,
+  Sparkles,
+  FileSearch,
+  Brain,
+} from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import api from "@/lib/api";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export default function UploadProjectPage() {
   const router = useRouter();
@@ -37,6 +47,7 @@ export default function UploadProjectPage() {
 
   // Form submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showAnalyzingDialog, setShowAnalyzingDialog] = useState(false);
   const [errors, setErrors] = useState<{
     projectName?: string;
     projectDescription?: string;
@@ -111,7 +122,7 @@ export default function UploadProjectPage() {
         prev.filter((result) => result.id !== user.id)
       );
 
-      setSearchQuery("")
+      setSearchQuery("");
     }
   };
 
@@ -148,6 +159,7 @@ export default function UploadProjectPage() {
     if (!validateForm()) return;
 
     setIsSubmitting(true);
+    setShowAnalyzingDialog(true);
 
     try {
       const formData = new FormData();
@@ -166,6 +178,7 @@ export default function UploadProjectPage() {
       router.push(`/report/${data.project._id}`);
     } catch (error: any) {
       console.error("Project creation failed:", error);
+      setShowAnalyzingDialog(false);
       setErrors((prev) => ({
         ...prev,
         submission: error.response?.data?.message || "Project creation failed",
@@ -195,6 +208,93 @@ export default function UploadProjectPage() {
 
   return (
     <div className="container py-8 mx-auto bg-white">
+      {/* Analyzing Dialog */}
+      <Dialog open={showAnalyzingDialog} onOpenChange={() => {}}>
+        <DialogContent className="sm:max-w-md border-none shadow-2xl bg-white p-0 overflow-hidden">
+          <div className="relative">
+            {/* Animated gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 animate-pulse"></div>
+
+            {/* Content */}
+            <div className="relative p-8 flex flex-col items-center justify-center space-y-6">
+              {/* Animated Icons */}
+              <div className="relative w-24 h-24">
+                {/* Outer rotating ring */}
+                <div className="absolute inset-0 border-4 border-blue-200 rounded-full animate-spin"></div>
+
+                {/* Middle pulsing ring */}
+                <div className="absolute inset-2 border-4 border-purple-200 rounded-full animate-ping"></div>
+
+                {/* Inner icon container */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative">
+                    <Brain className="h-12 w-12 text-blue-600 animate-pulse" />
+                    <Sparkles className="h-6 w-6 text-purple-600 absolute -top-1 -right-1 animate-bounce" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Text content */}
+              <div className="text-center space-y-2">
+                <h3 className="text-2xl font-bold text-gray-900">
+                  Analyzing Your Project
+                </h3>
+                <p className="text-gray-600 max-w-sm">
+                  Our AI is detecting code smells and analyzing your project
+                  structure...
+                </p>
+              </div>
+
+              {/* Progress indicators */}
+              <div className="w-full space-y-3">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-gray-700">
+                    Extracting project files
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div
+                    className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"
+                    style={{ animationDelay: "0.2s" }}
+                  ></div>
+                  <span className="text-gray-700">Scanning code patterns</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div
+                    className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"
+                    style={{ animationDelay: "0.4s" }}
+                  ></div>
+                  <span className="text-gray-700">Detecting code smells</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div
+                    className="w-2 h-2 bg-pink-500 rounded-full animate-pulse"
+                    style={{ animationDelay: "0.6s" }}
+                  ></div>
+                  <span className="text-gray-700">Generating report</span>
+                </div>
+              </div>
+
+              {/* Loading bar */}
+              <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-[shimmer_2s_ease-in-out_infinite]"
+                  style={{
+                    width: "100%",
+                    backgroundSize: "200% 100%",
+                  }}
+                ></div>
+              </div>
+
+              <p className="text-xs text-gray-500 italic">
+                This may take a few moments...
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <div className="flex items-center gap-2 mb-6 max-w-xl mx-auto">
         <Link href="/">
           <Button
@@ -437,7 +537,7 @@ export default function UploadProjectPage() {
           {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Creating Project...
+              Creating and Analyzing Project...
             </>
           ) : (
             "Create Project"

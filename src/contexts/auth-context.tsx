@@ -50,7 +50,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const { token } = parseCookies();
       if (token) {
         try {
-          console.log("it runs");
           const { data } = await api.get(`/user/verify`);
           setUser(data.user);
           setIsAuthenticated(true);

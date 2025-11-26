@@ -7,13 +7,22 @@ import { TooltipProps } from "recharts";
 
 const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
   if (active && payload && payload.length) {
-    const data = payload[0].payload;
+    const data = payload[0];
+    const category = data.payload?.category || data.name || "Unknown";
+    const value = data.value || 0;
+    // const percent = data?.percent as any || 0;
+
     return (
-      <div className="bg-white border border-blue-200 shadow-lg p-3 rounded-lg">
-        <p className="font-medium text-blue-900">{data.name}</p>
-        <p className="text-blue-700">Value: {data.value}</p>
-        <p className="text-blue-700">
-          Percentage: {(data.percent * 100).toFixed(1)}%
+      <div className="bg-white border-2 border-[#d0d7de] shadow-xl p-4 rounded-lg backdrop-blur-sm">
+        <p className="font-semibold text-[#24292f] text-sm mb-2">{category}</p>
+        <p className="text-[#57606a] text-xs">
+          Count: <span className="font-medium text-[#24292f]">{value}</span>
+        </p>
+        <p className="text-[#57606a] text-xs">
+          {/* Percentage:{" "} */}
+          <span className="font-medium text-[#0969da]">
+            {/* {(percent * 100).toFixed(1)}% */}
+          </span>
         </p>
       </div>
     );
@@ -54,7 +63,7 @@ export default function CodeSmellPieChart({
   }, []);
   return (
     <div className="border border-[#d0d7de] rounded-md overflow-hidden">
-      <div className="bg-[#f6f8fa] border-b border-[#d0d7de] px-4 py-3">
+      <div className="border-b border-[#d0d7de] px-4 py-3">
         <h3 className="text-sm font-semibold text-[#24292f]">
           Code Smell Distribution
         </h3>

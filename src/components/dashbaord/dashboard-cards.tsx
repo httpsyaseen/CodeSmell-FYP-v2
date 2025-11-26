@@ -65,7 +65,7 @@ export function DashboardCards() {
   const getSeverity = (value: number) => {
     if (value === 0) return "Low";
     if (value < 50) return "Medium";
-    if (value > 50) return "high";
+    if (value > 50) return "High";
   };
 
   if (error && !data) {
@@ -83,44 +83,38 @@ export function DashboardCards() {
   return (
     <div className="space-y-8">
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {/* Total Code Smells Card */}
-        <Card className="border border-[#d0d7de] rounded-md overflow-hidden  bg-[#f6f8fa]">
+        {/* Code Smells Card */}
+        <Card className="border border-[#d0d7de] rounded-md overflow-hidden bg-white">
           {loading ? (
-            <CardContent className="">
+            <CardContent className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <Skeleton className="h-4 w-32 bg-[#eaeef2]" />
                 <Skeleton className="h-8 w-8 rounded-full bg-[#eaeef2]" />
               </div>
               <Skeleton className="h-8 w-20 mb-2 bg-[#eaeef2]" />
               <Skeleton className="h-3 w-24 bg-[#eaeef2]" />
+              <div className="mt-4 pt-4 border-t border-[#d0d7de]">
+                <Skeleton className="h-3 w-full bg-[#eaeef2]" />
+              </div>
             </CardContent>
           ) : (
-            <CardContent className="p-4 bg-[#f6f8fa]">
-              <div className="flex items-center justify-between mb-2">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-3">
                 <span className="text-sm font-medium text-[#57606a]">
                   Code Smells
                 </span>
-                <AlertTriangle className="h-4 w-4 text-[#d29922]" />
+                <AlertTriangle className="h-5 w-5 text-[#57606a]" />
               </div>
-              <div className="text-2xl font-semibold text-[#24292f]">
+              <div className="text-3xl font-bold text-[#24292f] mb-1">
                 {data?.totalSmells.toLocaleString()}
               </div>
               <p className="text-xs text-[#57606a] mt-1">
                 Issues detected across all projects
               </p>
-              <div className="mt-3 pt-3 border-t border-[#d0d7de]">
+              <div className="mt-4 pt-4 border-t border-[#d0d7de]">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-[#57606a]">Severity</span>
-                  <span
-                    className={cn(
-                      "text-xs font-medium px-2 py-0.5 rounded-full",
-                      data?.totalSmells === 0
-                        ? "text-[#2da44e] bg-[#dafbe1]" // Green for Low
-                        : data?.totalSmells || 5 < 50
-                        ? "text-[#bf8700] bg-[#fff8c5]" // Yellow for Medium
-                        : "text-[#cf222e] bg-[#FFEBE9]" // Red for High
-                    )}
-                  >
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#f6f8fa] text-[#57606a]">
                     {getSeverity(data?.totalSmells || 0)}
                   </span>
                 </div>
@@ -130,34 +124,37 @@ export function DashboardCards() {
         </Card>
 
         {/* Total Projects Card */}
-        <Card className="border border-[#d0d7de] rounded-md overflow-hidden bg-[#f6f8fa] ">
+        <Card className="border border-[#d0d7de] rounded-md overflow-hidden bg-white">
           {loading ? (
-            <CardContent className="p-4">
+            <CardContent className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <Skeleton className="h-4 w-32 bg-[#eaeef2]" />
                 <Skeleton className="h-8 w-8 rounded-full bg-[#eaeef2]" />
               </div>
               <Skeleton className="h-8 w-20 mb-2 bg-[#eaeef2]" />
               <Skeleton className="h-3 w-24 bg-[#eaeef2]" />
+              <div className="mt-4 pt-4 border-t border-[#d0d7de]">
+                <Skeleton className="h-3 w-full bg-[#eaeef2]" />
+              </div>
             </CardContent>
           ) : (
-            <CardContent className="p-4 bg-[#f6f8fa]">
-              <div className="flex items-center justify-between mb-2">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-3">
                 <span className="text-sm font-medium text-[#57606a]">
                   Projects
                 </span>
-                <FileText className="h-4 w-4 text-[#57606a]" />
+                <FileText className="h-5 w-5 text-[#57606a]" />
               </div>
-              <div className="text-2xl font-semibold text-[#24292f]">
+              <div className="text-3xl font-bold text-[#24292f] mb-1">
                 {data?.totalProjects}
               </div>
               <p className="text-xs text-[#57606a] mt-1">
                 Active projects being monitored
               </p>
-              <div className="mt-3 pt-3 border-t border-[#d0d7de]">
+              <div className="mt-4 pt-4 border-t border-[#d0d7de]">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-[#57606a]">Status</span>
-                  <span className="text-xs font-medium text-[#0969da] bg-[#ddf4ff] px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#f6f8fa] text-[#57606a]">
                     Active
                   </span>
                 </div>
@@ -167,53 +164,42 @@ export function DashboardCards() {
         </Card>
 
         {/* Code Quality Card */}
-        <Card className="border border-[#d0d7de] rounded-md overflow-hidden bg-[#f6f8fa] ">
+        <Card className="border border-[#d0d7de] rounded-md overflow-hidden bg-white">
           {loading ? (
-            <CardContent className="p-4">
+            <CardContent className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <Skeleton className="h-4 w-32 bg-[#eaeef2]" />
                 <Skeleton className="h-8 w-8 rounded-full bg-[#eaeef2]" />
               </div>
               <Skeleton className="h-8 w-20 mb-2 bg-[#eaeef2]" />
               <Skeleton className="h-3 w-full bg-[#eaeef2]" />
-              <Skeleton className="h-3 w-16 mt-2 bg-[#eaeef2]" />
+              <div className="mt-4 pt-4 border-t border-[#d0d7de]">
+                <Skeleton className="h-3 w-full bg-[#eaeef2]" />
+              </div>
             </CardContent>
           ) : (
-            <CardContent className="p-4 bg-[#f6f8fa]">
-              <div className="flex items-center justify-between mb-2">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-3">
                 <span className="text-sm font-medium text-[#57606a]">
                   Code Quality
                 </span>
-                <Code className="h-4 w-4 text-[#2da44e]" />
+                <Code className="h-5 w-5 text-[#57606a]" />
               </div>
-              <div className="text-2xl font-semibold text-[#24292f]">
+              <div className="text-3xl font-bold text-[#24292f] mb-1">
                 {Number.parseFloat(data?.codeQuality || "0").toFixed(1)}%
               </div>
-              <div className="mt-2 bg-[#d0d7de] rounded-full h-2 overflow-hidden">
+              <div className="mt-3 bg-[#f6f8fa] rounded-full h-3 overflow-hidden">
                 <div
-                  className={cn(
-                    "h-full transition-all duration-500 ease-out",
-                    getQualityColor(data?.codeQuality || "0")
-                  )}
+                  className="h-full bg-[#57606a] rounded-full"
                   style={{
                     width: `${data?.codeQuality}%`,
-                    transition: "width 1s ease-in-out",
                   }}
                 />
               </div>
-              <div className="mt-3 pt-3 border-t border-[#d0d7de]">
+              <div className="mt-4 pt-4 border-t border-[#d0d7de]">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-[#57606a]">Status</span>
-                  <span
-                    className={cn(
-                      "text-xs font-medium px-2 py-0.5 rounded-full",
-                      Number.parseFloat(data?.codeQuality || "0") >= 70
-                        ? "text-[#2da44e] bg-[#dafbe1]"
-                        : Number.parseFloat(data?.codeQuality || "0") >= 40
-                        ? "text-[#bf8700] bg-[#fff8c5]"
-                        : "text-[#cf222e] bg-[#FFEBE9]"
-                    )}
-                  >
+                  <span className="text-xs text-[#57606a]">Overall Status</span>
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#f6f8fa] text-[#57606a]">
                     {getQualityLabel(data?.codeQuality || "0")}
                   </span>
                 </div>
@@ -223,6 +209,7 @@ export function DashboardCards() {
         </Card>
       </div>
 
+      {/* Code Smell Distribution Chart */}
       <div>
         <CodeSmellPieChart chartData={data?.chartData ?? []} />
       </div>

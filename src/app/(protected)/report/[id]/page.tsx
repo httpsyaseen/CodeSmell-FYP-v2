@@ -30,6 +30,8 @@ import {
   RefreshCw,
   Shield,
   Upload,
+  Brain,
+  Sparkles,
 } from "lucide-react";
 import CodeSmellPieChart from "@/components/dashbaord/custom-piechart";
 import api from "@/lib/api";
@@ -42,6 +44,7 @@ export default function GitHubReportPage() {
   const [file, setFile] = useState<File | null>(null);
   const [project, setProject] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [showAnalyzingDialog, setShowAnalyzingDialog] = useState(false);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -66,6 +69,7 @@ export default function GitHubReportPage() {
   const handleUpload = () => {
     if (file) {
       setIsUploading(true);
+      setShowAnalyzingDialog(true);
       const formData = new FormData();
       formData.append("project", file);
 
@@ -88,17 +92,18 @@ export default function GitHubReportPage() {
         })
         .finally(() => {
           setIsUploading(false);
+          setShowAnalyzingDialog(false);
           setFile(null);
         });
     }
   };
 
-  const goToSettings = () => {
-    router.push(`/report/${id}/settings`);
-  };
-
   const goToEditor = () => {
     router.push(`/code-editor/${id}`);
+  };
+
+  const goToSettings = () => {
+    router.push(`/report/${id}/settings`);
   };
 
   const downloadJson = () => {
@@ -147,6 +152,92 @@ export default function GitHubReportPage() {
 
   return (
     <div className="container mx-auto py-6 px-4 md:px-6 bg-white">
+      {/* Analyzing Dialog */}
+      <Dialog open={showAnalyzingDialog} onOpenChange={() => {}}>
+        <DialogContent className="sm:max-w-md border-none shadow-2xl bg-white p-0 overflow-hidden">
+          <div className="relative">
+            {/* Animated gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 animate-pulse"></div>
+
+            {/* Content */}
+            <div className="relative p-8 flex flex-col items-center justify-center space-y-6">
+              {/* Animated Icons */}
+              <div className="relative w-24 h-24">
+                {/* Outer rotating ring */}
+                <div className="absolute inset-0 border-4 border-blue-200 rounded-full animate-spin"></div>
+
+                {/* Middle pulsing ring */}
+                <div className="absolute inset-2 border-4 border-purple-200 rounded-full animate-ping"></div>
+
+                {/* Inner icon container */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative">
+                    <Brain className="h-12 w-12 text-blue-600 animate-pulse" />
+                    <Sparkles className="h-6 w-6 text-purple-600 absolute -top-1 -right-1 animate-bounce" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Text content */}
+              <div className="text-center space-y-2">
+                <h3 className="text-2xl font-bold text-gray-900">
+                  Analyzing Your Project
+                </h3>
+                <p className="text-gray-600 max-w-sm">
+                  Our AI is detecting code smells and analyzing your updated
+                  project...
+                </p>
+              </div>
+
+              {/* Progress indicators */}
+              <div className="w-full space-y-3">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-gray-700">
+                    Extracting project files
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div
+                    className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"
+                    style={{ animationDelay: "0.2s" }}
+                  ></div>
+                  <span className="text-gray-700">Scanning code patterns</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div
+                    className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"
+                    style={{ animationDelay: "0.4s" }}
+                  ></div>
+                  <span className="text-gray-700">Detecting code smells</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div
+                    className="w-2 h-2 bg-pink-500 rounded-full animate-pulse"
+                    style={{ animationDelay: "0.6s" }}
+                  ></div>
+                  <span className="text-gray-700">Generating report</span>
+                </div>
+              </div>
+
+              {/* Loading bar */}
+              <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-[shimmer_2s_ease-in-out_infinite]"
+                  style={{
+                    width: "100%",
+                    backgroundSize: "200% 100%",
+                  }}
+                ></div>
+              </div>
+
+              <p className="text-xs text-gray-500 italic">
+                This may take a few moments...
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       {/* Repository-style header */}
       <div className=" border-[#d0d7de] pb-4 mb-2">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
@@ -238,19 +329,19 @@ export default function GitHubReportPage() {
               variant="outline"
               size="sm"
               className="h-8 text-xs font-medium text-[#24292f] border-[#d0d7de] bg-[#f6f8fa] hover:bg-[#f3f4f6]"
-              onClick={goToSettings}
+              onClick={goToEditor}
             >
-              <Cog className="mr-1.5 h-3.5 w-3.5" />
-              Project Settings
+              <Code2 className="mr-1.5 h-3.5 w-3.5" />
+              View Code
             </Button>
             <Button
               variant="outline"
               size="sm"
               className="h-8 text-xs font-medium text-[#24292f] border-[#d0d7de] bg-[#f6f8fa] hover:bg-[#f3f4f6]"
-              onClick={goToEditor}
+              onClick={goToSettings}
             >
-              <Code2 className="mr-1.5 h-3.5 w-3.5" />
-              View Code
+              <Cog className="mr-1.5 h-3.5 w-3.5" />
+              Project Settings
             </Button>
           </div>
         </div>
