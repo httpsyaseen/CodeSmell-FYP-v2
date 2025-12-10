@@ -14,6 +14,7 @@ import {
   Upload,
 } from "lucide-react";
 import axios from "axios";
+import api from "@/lib/api";
 import { useAuth } from "@/contexts/auth-context";
 import toast from "react-hot-toast";
 
@@ -80,10 +81,7 @@ export default function SignupPage() {
   // Check if username is available
   const checkUsernameAvailability = async (username: string) => {
     try {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/check-username/${username}`
-      );
-
+      const { data } = await api.get(`/user/check-username/${username}`);
       setUsernameStatus(data.available ? "available" : "unavailable");
     } catch (err) {
       console.error("Error checking username:", err);
