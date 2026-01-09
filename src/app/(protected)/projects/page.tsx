@@ -5,15 +5,8 @@ import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  AlertTriangle,
-  Book,
-  ChevronDown,
-  Clock,
-  Eye,
-  Plus,
-  Search,
-} from "lucide-react";
+import { AlertTriangle, Clock, Eye, Plus, Search } from "lucide-react";
+import { Card } from "@/components/ui/card";
 import api from "@/lib/api";
 import Loading from "@/components/loading";
 
@@ -93,150 +86,159 @@ export default function GitHubProjectsScreen() {
 
   if (error) {
     return (
-      <div className="container mx-auto py-8 px-4 md:px-6">
-        <div className="rounded-md border border-[#d0d7de] bg-[#ffebe9] p-4 text-[#cf222e]">
-          {error}
+      <div className="min-h-screen bg-slate-50/50 p-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-rose-700 flex items-center gap-3">
+            <AlertTriangle className="h-5 w-5" />
+            {error}
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <main className="container mx-auto py-6 px-4 md:px-6 bg-white">
-      {/* Header section with GitHub-style */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b border-[#d0d7de]">
-        <div className="flex items-center gap-2">
-          <Book className="h-5 w-5 text-[#57606a]" />
-          <h1 className="text-xl font-semibold text-[#24292f]">Projects</h1>
-        </div>
-        <Button
-          className="mt-4 md:mt-0 flex items-center gap-2 bg-[#2da44e] hover:bg-[#2c974b] text-white border-0"
-          onClick={() => router.push("/upload")}
-        >
-          <Plus className="h-4 w-4" />
-          New Project
-        </Button>
-      </div>
-
-      {/* Search and filter section with GitHub-style */}
-      <div className="mb-6 flex flex-col md:flex-row gap-4 items-start md:items-center">
-        <div className="relative flex-grow">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#57606a]" />
-          <Input
-            placeholder="Find a project..."
-            className="pl-10 h-9 border-[#d0d7de] text-[#24292f] placeholder:text-[#57606a] focus-visible:ring-[#0969da] focus-visible:border-[#0969da]"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-        <div className="flex gap-2">
+    <main className="min-h-screen bg-slate-50/50 pb-8">
+      {/* Header section */}
+      <div className="max-w-5xl mx-auto px-4 pt-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-slate-800">Projects</h1>
           <Button
-            variant="outline"
-            size="sm"
-            className="h-9 text-sm font-medium text-[#24292f] border-[#d0d7de] bg-[#f6f8fa] hover:bg-[#f3f4f6]"
+            className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-xl px-4 py-2 shadow-lg shadow-blue-500/25 transition-all"
+            onClick={() => router.push("/upload")}
           >
-            Sort by date
-            <ChevronDown className="ml-1.5 h-3.5 w-3.5" />
+            <Plus className="h-4 w-4" />
+            New Project
           </Button>
         </div>
-      </div>
 
-      {/* Projects list with GitHub-style */}
-      <div className="rounded-md border border-[#d0d7de] divide-y divide-[#d0d7de]">
+        {/* Search section */}
+        <div className="mb-6">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+            <Input
+              placeholder="Search projects..."
+              className="pl-12 h-11 rounded-xl border-slate-200 bg-white text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Projects grid */}
         {filteredProjects.length > 0 ? (
-          filteredProjects.map((project) => (
-            <div
-              key={project._id}
-              className="p-4 hover:bg-[#f6f8fa] transition-colors"
-            >
-              <div className="flex flex-col md:flex-row md:items-start gap-4">
-                <div className="flex-grow min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h2 className="text-base font-semibold text-[#0969da] hover:underline truncate">
-                      <a
-                        href={`/code-editor/${project._id}`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          router.push(`/code-editor/${project._id}`);
-                        }}
-                      >
-                        {project.title}
-                      </a>
-                    </h2>
-                  </div>
-                  <p className="text-sm text-[#57606a] mb-3 line-clamp-2">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-[#57606a]">
-                    <div className="flex items-center">
-                      <AlertTriangle className="h-3.5 w-3.5 text-[#d29922] mr-1" />
-                      <span className="font-semibold">
-                        {project.totalSmells} code smells
-                      </span>
-                    </div>
-                    <div className="flex items-center">
-                      <Clock className="h-3.5 w-3.5 mr-1" />
-                      <span className="font-semibold">
-                        Updated on {formatDate(project.lastUpdated)}
-                      </span>
-                    </div>
+          <div className="space-y-3">
+            {filteredProjects.map((project) => (
+              <Card
+                key={project._id}
+                className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-blue-200 hover:shadow-lg hover:shadow-blue-100/50 transition-all duration-300 group py-0"
+              >
+                <div className="p-5">
+                  <div className="flex items-start justify-between gap-6">
+                    <div className="flex-grow min-w-0">
+                      {/* Project title & description */}
+                      <div className="mb-3">
+                        <a
+                          href={`/code-editor/${project._id}`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push(`/code-editor/${project._id}`);
+                          }}
+                          className="text-lg font-semibold text-slate-800 hover:text-blue-600 transition-colors inline-block"
+                        >
+                          {project.title}
+                        </a>
+                        <p className="text-sm text-slate-500 mt-0.5 line-clamp-1">
+                          {project.description}
+                        </p>
+                      </div>
 
-                    {project.members.length > 0 && (
-                      <div className="flex items-center">
-                        <span className="mr-2 font-semibold">
-                          Team Members:{" "}
-                        </span>
-                        <div className="flex -space-x-1 mr-1">
-                          {project.members.slice(0, 3).map((member) => (
-                            <Avatar
-                              key={member.id}
-                              className="h-5 w-5 border border-white"
-                            >
-                              <AvatarImage
-                                src={member.photo || "/placeholder.svg"}
-                                alt={member.name}
-                              />
-                              <AvatarFallback className="text-[9px] bg-[#cff5ff] text-[#0969da]">
-                                {member.name.charAt(0)}
-                              </AvatarFallback>
-                            </Avatar>
-                          ))}
+                      {/* Meta info row */}
+                      <div className="flex flex-wrap items-center gap-4">
+                        {/* Code smells */}
+                        <div className="flex items-center gap-1.5 text-sm">
+                          <AlertTriangle className={`h-4 w-4 ${
+                            project.totalSmells === 0
+                              ? "text-emerald-500"
+                              : project.totalSmells < 10
+                              ? "text-amber-500"
+                              : "text-rose-500"
+                          }`} />
+                          <span className="text-slate-600 font-medium">{project.totalSmells}</span>
+                          <span className="text-slate-400">issues</span>
                         </div>
-                        {project.members.length > 3 && (
-                          <span>
-                            +{project.members.length - 3} contributors
-                          </span>
+
+                        <div className="w-px h-4 bg-slate-200" />
+
+                        {/* Last updated */}
+                        <div className="flex items-center gap-1.5 text-sm text-slate-500">
+                          <Clock className="h-4 w-4 text-slate-400" />
+                          <span>{formatDate(project.lastUpdated)}</span>
+                        </div>
+
+                        {project.members.length > 0 && (
+                          <>
+                            <div className="w-px h-4 bg-slate-200" />
+                            
+                            {/* Team members */}
+                            <div className="flex items-center gap-2">
+                              <div className="flex -space-x-2">
+                                {project.members.slice(0, 3).map((member) => (
+                                  <Avatar
+                                    key={member.id}
+                                    className="h-6 w-6 border-2 border-white ring-1 ring-slate-100"
+                                  >
+                                    <AvatarImage
+                                      src={member.photo || "/placeholder.svg"}
+                                      alt={member.name}
+                                    />
+                                    <AvatarFallback className="text-[9px] bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-semibold">
+                                      {member.name.charAt(0)}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                ))}
+                              </div>
+                              {project.members.length > 3 && (
+                                <span className="text-sm text-slate-400">
+                                  +{project.members.length - 3}
+                                </span>
+                              )}
+                            </div>
+                          </>
                         )}
                       </div>
-                    )}
+                    </div>
+
+                    {/* Action button */}
+                    <Button
+                      size="sm"
+                      className="h-9 px-4 text-sm font-medium bg-slate-50 text-slate-600 hover:bg-blue-500 hover:text-white border border-slate-200 hover:border-blue-500 rounded-lg transition-all duration-200 shrink-0"
+                      onClick={() => router.push(`/report/${project._id}`)}
+                    >
+                      <Eye className="mr-1.5 h-4 w-4" />
+                      View Report
+                    </Button>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 self-end md:self-start mt-3 md:mt-0">
-                  <Button
-                    size="sm"
-                    className="h-8 text-xs font-medium text-[#24292f] border-[1px] border-[#d0d7de] bg-[#f6f8fa] hover:bg-[#f3f4f6] cursor-pointer"
-                    onClick={() => router.push(`/report/${project._id}`)}
-                  >
-                    <Eye className="mr-1.5 h-3.5 w-3.5" />
-                    View Report
-                  </Button>
-                </div>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <Card className="bg-white border border-slate-200 rounded-xl p-8 text-center">
+            <div className="flex flex-col items-center gap-3">
+              <div className="p-3 bg-slate-100 rounded-xl">
+                <Search className="h-6 w-6 text-slate-400" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-slate-800 mb-1">
+                  No projects found
+                </h3>
+                <p className="text-sm text-slate-500">
+                  Try adjusting your search.
+                </p>
               </div>
             </div>
-          ))
-        ) : (
-          <div className="p-6 text-center text-[#57606a]">
-            <div className="mb-3">
-              <Search className="h-8 w-8 mx-auto text-[#8c959f]" />
-            </div>
-            <h3 className="text-base font-semibold mb-1">
-              No matching projects found
-            </h3>
-            <p className="text-sm">
-              Try adjusting your search or filter to find what you're looking
-              for.
-            </p>
-          </div>
+          </Card>
         )}
       </div>
     </main>

@@ -32,7 +32,11 @@ import {
   Upload,
   Brain,
   Sparkles,
+  CheckCircle,
+  ArrowLeft,
 } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
 import CodeSmellPieChart from "@/components/dashbaord/custom-piechart";
 import api from "@/lib/api";
 
@@ -144,311 +148,316 @@ export default function GitHubReportPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-white">
-        <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-[#0969da] border-[#d0d7de]"></div>
+      <div className="flex items-center justify-center h-screen bg-slate-50/50">
+        <div className="flex flex-col items-center gap-3">
+          <div className="animate-spin rounded-full h-10 w-10 border-3 border-blue-500 border-t-transparent"></div>
+          <p className="text-sm text-slate-500">Loading report...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 bg-white">
+    <div className="min-h-screen bg-slate-50/50 pb-8">
       {/* Analyzing Dialog */}
       <Dialog open={showAnalyzingDialog} onOpenChange={() => {}}>
-        <DialogContent className="sm:max-w-md border-none shadow-2xl bg-white p-0 overflow-hidden">
+        <DialogContent className="sm:max-w-md border-0 shadow-2xl bg-white p-0 overflow-hidden rounded-2xl">
           <div className="relative">
-            {/* Animated gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 animate-pulse"></div>
-
-            {/* Content */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"></div>
             <div className="relative p-8 flex flex-col items-center justify-center space-y-6">
-              {/* Animated Icons */}
-              <div className="relative w-24 h-24">
-                {/* Outer rotating ring */}
-                <div className="absolute inset-0 border-4 border-blue-200 rounded-full animate-spin"></div>
-
-                {/* Middle pulsing ring */}
-                <div className="absolute inset-2 border-4 border-purple-200 rounded-full animate-ping"></div>
-
-                {/* Inner icon container */}
+              <div className="relative w-28 h-28">
+                <div
+                  className="absolute inset-0 border-4 border-blue-200 rounded-full animate-spin"
+                  style={{ animationDuration: "3s" }}
+                ></div>
+                <div
+                  className="absolute inset-3 border-4 border-indigo-200 rounded-full animate-ping"
+                  style={{ animationDuration: "2s" }}
+                ></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative">
-                    <Brain className="h-12 w-12 text-blue-600 animate-pulse" />
-                    <Sparkles className="h-6 w-6 text-purple-600 absolute -top-1 -right-1 animate-bounce" />
+                  <div className="relative p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-xl shadow-blue-500/30">
+                    <Brain className="h-10 w-10 text-white" />
+                    <Sparkles className="h-5 w-5 text-yellow-300 absolute -top-1 -right-1 animate-bounce" />
                   </div>
                 </div>
               </div>
-
-              {/* Text content */}
               <div className="text-center space-y-2">
-                <h3 className="text-2xl font-bold text-gray-900">
+                <h3 className="text-2xl font-bold text-slate-800">
                   Analyzing Your Project
                 </h3>
-                <p className="text-gray-600 max-w-sm">
+                <p className="text-slate-500 max-w-sm">
                   Our AI is detecting code smells and analyzing your updated
                   project...
                 </p>
               </div>
-
-              {/* Progress indicators */}
-              <div className="w-full space-y-3">
+              <div className="w-full space-y-3 bg-white/50 rounded-xl p-4">
                 <div className="flex items-center gap-3 text-sm">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-gray-700">
+                  <div className="p-1 bg-emerald-100 rounded-full">
+                    <CheckCircle className="w-4 h-4 text-emerald-600" />
+                  </div>
+                  <span className="text-slate-700 font-medium">
                     Extracting project files
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
-                  <div
-                    className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"
-                    style={{ animationDelay: "0.2s" }}
-                  ></div>
-                  <span className="text-gray-700">Scanning code patterns</span>
+                  <div className="w-6 h-6 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                  </div>
+                  <span className="text-slate-700 font-medium">
+                    Scanning code patterns
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
-                  <div
-                    className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"
-                    style={{ animationDelay: "0.4s" }}
-                  ></div>
-                  <span className="text-gray-700">Detecting code smells</span>
+                  <div className="w-6 h-6 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                  </div>
+                  <span className="text-slate-400">Detecting code smells</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
-                  <div
-                    className="w-2 h-2 bg-pink-500 rounded-full animate-pulse"
-                    style={{ animationDelay: "0.6s" }}
-                  ></div>
-                  <span className="text-gray-700">Generating report</span>
+                  <div className="w-6 h-6 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                  </div>
+                  <span className="text-slate-400">Generating report</span>
                 </div>
               </div>
-
-              {/* Loading bar */}
-              <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-[shimmer_2s_ease-in-out_infinite]"
-                  style={{
-                    width: "100%",
-                    backgroundSize: "200% 100%",
-                  }}
+                  className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full animate-pulse"
+                  style={{ width: "60%" }}
                 ></div>
               </div>
-
-              <p className="text-xs text-gray-500 italic">
+              <p className="text-xs text-slate-400">
                 This may take a few moments...
               </p>
             </div>
           </div>
         </DialogContent>
       </Dialog>
-      {/* Repository-style header */}
-      <div className=" border-[#d0d7de] pb-4 mb-2">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-          <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <h1 className="text-2xl font-semibold text-[#24292f]">
-              {project?.title}
-            </h1>
-            <Badge
-              variant="outline"
-              className="ml-2 text-xs font-medium  text-[#24292f] border-[#d0d7de] bg-[#f6f8fa] px-2 py-0.5 rounded-full"
-            >
-              version: {project?.latestVersion?.version}
-            </Badge>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 text-xs font-medium text-[#24292f] border-[#d0d7de] bg-[#f6f8fa] hover:bg-[#f3f4f6]"
-                >
-                  <Download className="mr-1.5 h-3.5 w-3.5" />
-                  Download Report
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-40">
-                <DropdownMenuItem onClick={downloadJson}>JSON</DropdownMenuItem>
-                <DropdownMenuItem onClick={downloadCsv}>CSV</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
 
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 text-xs font-medium text-[#24292f] border-[#d0d7de] bg-[#f6f8fa] hover:bg-[#f3f4f6]"
-                >
-                  <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
-                  Update Project
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="bg-white border border-[#d0d7de] shadow-lg rounded-md p-0 w-full max-w-md">
-                <DialogHeader className="px-4 py-3 border-b border-[#d0d7de] bg-[#f6f8fa]">
-                  <DialogTitle className="text-base font-semibold text-[#24292f]">
-                    Upload Project Update
-                  </DialogTitle>
-                </DialogHeader>
-                <div className="p-4">
-                  <div className="mb-4">
-                    <Label
-                      htmlFor="projectFile"
-                      className="text-sm font-medium text-[#24292f] mb-1 block"
-                    >
-                      Project Zip File
-                    </Label>
-                    <Input
-                      id="projectFile"
-                      type="file"
-                      accept=".zip"
-                      onChange={handleFileChange}
-                      disabled={isUploading}
-                      className="border-[#d0d7de] focus-visible:ring-[#0969da] focus-visible:border-[#0969da]"
-                    />
-                  </div>
-                  {file && (
-                    <p className="text-xs text-[#57606a] mb-4">
-                      Selected: {file.name}
-                    </p>
-                  )}
-                  <DialogTrigger asChild>
-                    <Button
-                      onClick={async () => {
-                        await handleUpload();
-                      }}
-                      disabled={!file || isUploading}
-                      className="w-full h-9 text-sm font-medium text-white bg-[#2da44e] hover:bg-[#2c974b]"
-                    >
-                      <Upload className="mr-1.5 h-3.5 w-3.5" />
-                      {isUploading ? "Uploading..." : "Upload Project"}
-                    </Button>
-                  </DialogTrigger>
+      {/* Header */}
+      <div className="bg-white border-b border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-5">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+            <div className="flex items-center gap-4">
+              <Link href="/projects">
+                <button className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors">
+                  <ArrowLeft className="h-5 w-5 text-slate-600" />
+                </button>
+              </Link>
+              <div>
+                <div className="flex items-center gap-3">
+                  <h1 className="text-xl font-bold text-slate-800">
+                    {project?.title}
+                  </h1>
+                  <Badge className="bg-blue-100 text-blue-700 border-0 px-2.5 py-0.5 text-xs font-medium rounded-full">
+                    v{project?.latestVersion?.version}
+                  </Badge>
                 </div>
-              </DialogContent>
-            </Dialog>
+                <p className="text-sm text-slate-500 mt-0.5">
+                  Code smell analysis report
+                </p>
+              </div>
+            </div>
 
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 text-xs font-medium text-[#24292f] border-[#d0d7de] bg-[#f6f8fa] hover:bg-[#f3f4f6]"
-              onClick={goToEditor}
-            >
-              <Code2 className="mr-1.5 h-3.5 w-3.5" />
-              View Code
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 text-xs font-medium text-[#24292f] border-[#d0d7de] bg-[#f6f8fa] hover:bg-[#f3f4f6]"
-              onClick={goToSettings}
-            >
-              <Cog className="mr-1.5 h-3.5 w-3.5" />
-              Project Settings
-            </Button>
-          </div>
-        </div>
+            <div className="flex flex-wrap gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 px-3 text-sm font-medium text-slate-700 border-slate-200 bg-white hover:bg-slate-50 rounded-lg"
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    Export
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="w-32 rounded-lg border-slate-200"
+                >
+                  <DropdownMenuItem onClick={downloadJson} className="text-sm">
+                    JSON
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={downloadCsv} className="text-sm">
+                    CSV
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
-        {/* GitHub-style navigation tabs */}
-        {/* <div className="flex overflow-x-auto -mb-px">
-          <div className="border-b-2 border-[#fd8c73] px-4 py-2 text-sm font-medium text-[#24292f]">
-            <div className="flex items-center">
-              <BarChart2 className="mr-1.5 h-4 w-4" />
-              Report
-            </div>
-          </div>
-          <div className="px-4 py-2 text-sm font-medium text-[#57606a] hover:text-[#24292f]">
-            <div className="flex items-center">
-              <Bug className="mr-1.5 h-4 w-4" />
-              Code Smells
-            </div>
-          </div>
-          <div className="px-4 py-2 text-sm font-medium text-[#57606a] hover:text-[#24292f]">
-            <div className="flex items-center">
-              <GitBranch className="mr-1.5 h-4 w-4" />
-              History
-            </div>
-          </div>
-        </div> */}
-      </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 px-3 text-sm font-medium text-slate-700 border-slate-200 bg-white hover:bg-slate-50 rounded-lg"
+                  >
+                    <RefreshCw className="mr-2 h-4 w-4" />
+                    Update
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-white border border-slate-200 shadow-xl rounded-2xl p-0 w-full max-w-md">
+                  <DialogHeader className="px-6 py-4 border-b border-slate-100 bg-slate-50 rounded-t-2xl">
+                    <DialogTitle className="text-lg font-semibold text-slate-800">
+                      Upload Project Update
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="p-6">
+                    <div className="mb-4">
+                      <Label
+                        htmlFor="projectFile"
+                        className="text-sm font-medium text-slate-700 mb-2 block"
+                      >
+                        Project Zip File
+                      </Label>
+                      <Input
+                        id="projectFile"
+                        type="file"
+                        accept=".zip"
+                        onChange={handleFileChange}
+                        disabled={isUploading}
+                        className="border-slate-200 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                      />
+                    </div>
+                    {file && (
+                      <p className="text-sm text-slate-600 mb-4 flex items-center gap-2">
+                        <CheckCircle className="h-4 w-4 text-emerald-500" />
+                        {file.name}
+                      </p>
+                    )}
+                    <DialogTrigger asChild>
+                      <Button
+                        onClick={handleUpload}
+                        disabled={!file || isUploading}
+                        className="w-full h-10 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 rounded-lg shadow-lg shadow-blue-500/25"
+                      >
+                        <Upload className="mr-2 h-4 w-4" />
+                        {isUploading ? "Uploading..." : "Upload Project"}
+                      </Button>
+                    </DialogTrigger>
+                  </div>
+                </DialogContent>
+              </Dialog>
 
-      {/* Stats cards in GitHub style */}
-      <div className="mb-8">
-        {/* <h2 className="text-lg font-semibold text-[#24292f] mb-4">
-          Project Overview
-        </h2> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="border border-[#d0d7de] rounded-md p-4 bg-[#f6f8fa]">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-[#57606a]">
-                Total Files
-              </span>
-              <FileText className="h-4 w-4 text-[#57606a]" />
-            </div>
-            <div className="text-2xl font-semibold text-[#24292f]">
-              {project?.latestVersion?.report?.totalFiles || 0}
-            </div>
-          </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 px-3 text-sm font-medium text-slate-700 border-slate-200 bg-white hover:bg-slate-50 rounded-lg"
+                onClick={goToEditor}
+              >
+                <Code2 className="mr-2 h-4 w-4" />
+                Code
+              </Button>
 
-          <div className="border border-[#d0d7de] rounded-md p-4 bg-[#f6f8fa]">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-[#57606a]">
-                Total Code Smells
-              </span>
-              <Bug className="h-4 w-4 text-[#d29922]" />
-            </div>
-            <div className="text-2xl font-semibold text-[#24292f]">
-              {project?.latestVersion?.report?.totalSmells || 0}
-            </div>
-          </div>
-
-          <div className="border border-[#d0d7de] rounded-md p-4 bg-[#f6f8fa]">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-[#57606a]">
-                Affected Files
-              </span>
-              <FileWarning className="h-4 w-4 text-[#cf222e]" />
-            </div>
-            <div className="text-2xl font-semibold text-[#24292f]">
-              {project?.latestVersion?.report?.AffectedFiles || 0}
-            </div>
-            <p className="text-xs text-[#57606a]">
-              {Math.round(
-                ((project?.latestVersion?.report?.AffectedFiles ?? 0) /
-                  (project?.latestVersion?.report?.totalFiles ?? 1)) *
-                  100
-              )}
-              % of total files
-            </p>
-          </div>
-
-          <div className="border border-[#d0d7de] rounded-md p-4 bg-[#f6f8fa]">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-[#57606a]">
-                Code Quality
-              </span>
-              <Shield className="h-4 w-4 text-[#2da44e]" />
-            </div>
-            <div className="text-2xl font-semibold text-[#24292f]">
-              {project?.qualityScore || 0}%
-            </div>
-            <div className="mt-2 bg-[#d0d7de] rounded-full h-2 overflow-hidden">
-              <div
-                className="h-full bg-[#2da44e]"
-                style={{ width: `${project?.qualityScore || 0}%` }}
-                role="progressbar"
-                aria-valuenow={project?.qualityScore || 0}
-                aria-valuemin={0}
-                aria-valuemax={100}
-              ></div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 px-3 text-sm font-medium text-slate-700 border-slate-200 bg-white hover:bg-slate-50 rounded-lg"
+                onClick={goToSettings}
+              >
+                <Cog className="mr-2 h-4 w-4" />
+                Settings
+              </Button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Chart section with GitHub styling */}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 pt-6">
+        {/* Stats cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <Card className="bg-white border border-slate-200 rounded-xl py-0 overflow-hidden">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-medium text-slate-500">
+                  Total Files
+                </span>
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <FileText className="h-4 w-4 text-blue-600" />
+                </div>
+              </div>
+              <div className="text-3xl font-bold text-slate-800">
+                {project?.latestVersion?.report?.totalFiles || 0}
+              </div>
+            </CardContent>
+          </Card>
 
-      <div>
-        <CodeSmellPieChart
-          chartData={project?.latestVersion?.report?.chartData}
-        />
+          <Card className="bg-white border border-slate-200 rounded-xl py-0 overflow-hidden">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-medium text-slate-500">
+                  Code Smells
+                </span>
+                <div className="p-2 bg-amber-100 rounded-lg">
+                  <Bug className="h-4 w-4 text-amber-600" />
+                </div>
+              </div>
+              <div className="text-3xl font-bold text-slate-800">
+                {project?.latestVersion?.report?.totalSmells || 0}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border border-slate-200 rounded-xl py-0 overflow-hidden">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-medium text-slate-500">
+                  Affected Files
+                </span>
+                <div className="p-2 bg-rose-100 rounded-lg">
+                  <FileWarning className="h-4 w-4 text-rose-600" />
+                </div>
+              </div>
+              <div className="text-3xl font-bold text-slate-800">
+                {project?.latestVersion?.report?.AffectedFiles || 0}
+              </div>
+              <p className="text-xs text-slate-400 mt-1">
+                {Math.round(
+                  ((project?.latestVersion?.report?.AffectedFiles ?? 0) /
+                    (project?.latestVersion?.report?.totalFiles ?? 1)) *
+                    100
+                )}
+                % of total
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border border-slate-200 rounded-xl py-0 overflow-hidden">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-medium text-slate-500">
+                  Code Quality
+                </span>
+                <div className="p-2 bg-emerald-100 rounded-lg">
+                  <Shield className="h-4 w-4 text-emerald-600" />
+                </div>
+              </div>
+              <div className="text-3xl font-bold text-slate-800">
+                {project?.qualityScore || 0}%
+              </div>
+              <div className="mt-2 bg-slate-100 rounded-full h-2 overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all ${
+                    (project?.qualityScore || 0) >= 80
+                      ? "bg-emerald-500"
+                      : (project?.qualityScore || 0) >= 50
+                      ? "bg-amber-500"
+                      : "bg-rose-500"
+                  }`}
+                  style={{ width: `${project?.qualityScore || 0}%` }}
+                ></div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Chart section */}
+        <Card className="bg-white border border-slate-200 rounded-xl py-0 overflow-hidden">
+          <CardContent className="p-6">
+            <CodeSmellPieChart
+              chartData={project?.latestVersion?.report?.chartData}
+            />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

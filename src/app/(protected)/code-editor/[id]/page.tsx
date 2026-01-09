@@ -48,8 +48,8 @@ export default function Page() {
   }
 
   return (
-    <>
+    <div className="px-4 py-2">
       <CodeEditor fileData={data.fileData} smells={data.smells} />;
-    </>
+    </div>
   );
 }

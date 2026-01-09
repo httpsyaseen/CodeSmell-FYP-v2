@@ -11,6 +11,8 @@ import {
   Plus,
   Minus,
   ArrowLeft,
+  PanelLeftClose,
+  PanelLeft,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import api from "@/lib/api";
@@ -165,6 +167,7 @@ export default function CodeEditor({
     null
   );
   const [showComparison, setShowComparison] = useState(false);
+  const [showFilePanel, setShowFilePanel] = useState(true);
 
   useEffect(() => {
     if (fileData.length > 0) {
@@ -446,6 +449,17 @@ export default function CodeEditor({
           >
             <ArrowLeft className="h-4 w-4" />
           </button>
+          <button
+            onClick={() => setShowFilePanel(!showFilePanel)}
+            className="flex items-center gap-1 p-1 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded transition-colors"
+            title={showFilePanel ? "Hide file panel" : "Show file panel"}
+          >
+            {showFilePanel ? (
+              <PanelLeftClose className="h-4 w-4" />
+            ) : (
+              <PanelLeft className="h-4 w-4" />
+            )}
+          </button>
           {showComparison ? (
             <>
               <GitCompare className="h-4 w-4 text-blue-600" />
@@ -477,8 +491,13 @@ export default function CodeEditor({
 
       <div className="flex h-[600px]">
         {/* File explorer */}
-        <div className="w-64 border-r overflow-y-auto bg-gray-50">
-          <div className="p-2">
+        <div
+          className={cn(
+            "border-r overflow-y-auto bg-gray-50 transition-all duration-300",
+            showFilePanel ? "w-64" : "w-0 overflow-hidden border-r-0"
+          )}
+        >
+          <div className="p-2 w-64">
             {fileData.map((file) => (
               <div
                 key={file._id}

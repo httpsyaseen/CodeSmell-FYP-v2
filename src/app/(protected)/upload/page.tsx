@@ -20,6 +20,13 @@ import {
   Sparkles,
   FileSearch,
   Brain,
+  FolderUp,
+  FileArchive,
+  Users,
+  FileText,
+  ArrowRight,
+  CheckCircle,
+  AlertCircle,
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -207,87 +214,91 @@ export default function UploadProjectPage() {
   };
 
   return (
-    <div className="container py-8 mx-auto bg-white">
+    <div className="min-h-screen bg-slate-50/50 pb-8 px-4">
       {/* Analyzing Dialog */}
       <Dialog open={showAnalyzingDialog} onOpenChange={() => {}}>
-        <DialogContent className="sm:max-w-md border-none shadow-2xl bg-white p-0 overflow-hidden">
+        <DialogContent className="sm:max-w-md border-0 shadow-2xl bg-white p-0 overflow-hidden rounded-2xl">
           <div className="relative">
             {/* Animated gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 animate-pulse"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"></div>
 
             {/* Content */}
             <div className="relative p-8 flex flex-col items-center justify-center space-y-6">
               {/* Animated Icons */}
-              <div className="relative w-24 h-24">
+              <div className="relative w-28 h-28">
                 {/* Outer rotating ring */}
-                <div className="absolute inset-0 border-4 border-blue-200 rounded-full animate-spin"></div>
+                <div
+                  className="absolute inset-0 border-4 border-blue-200 rounded-full animate-spin"
+                  style={{ animationDuration: "3s" }}
+                ></div>
 
                 {/* Middle pulsing ring */}
-                <div className="absolute inset-2 border-4 border-purple-200 rounded-full animate-ping"></div>
+                <div
+                  className="absolute inset-3 border-4 border-indigo-200 rounded-full animate-ping"
+                  style={{ animationDuration: "2s" }}
+                ></div>
 
                 {/* Inner icon container */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative">
-                    <Brain className="h-12 w-12 text-blue-600 animate-pulse" />
-                    <Sparkles className="h-6 w-6 text-purple-600 absolute -top-1 -right-1 animate-bounce" />
+                  <div className="relative p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-xl shadow-blue-500/30">
+                    <Brain className="h-10 w-10 text-white" />
+                    <Sparkles className="h-5 w-5 text-yellow-300 absolute -top-1 -right-1 animate-bounce" />
                   </div>
                 </div>
               </div>
 
               {/* Text content */}
               <div className="text-center space-y-2">
-                <h3 className="text-2xl font-bold text-gray-900">
+                <h3 className="text-2xl font-bold text-slate-800">
                   Analyzing Your Project
                 </h3>
-                <p className="text-gray-600 max-w-sm">
+                <p className="text-slate-500 max-w-sm">
                   Our AI is detecting code smells and analyzing your project
                   structure...
                 </p>
               </div>
 
               {/* Progress indicators */}
-              <div className="w-full space-y-3">
+              <div className="w-full space-y-3 bg-white/50 rounded-xl p-4">
                 <div className="flex items-center gap-3 text-sm">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-gray-700">
+                  <div className="p-1 bg-emerald-100 rounded-full">
+                    <CheckCircle className="w-4 h-4 text-emerald-600" />
+                  </div>
+                  <span className="text-slate-700 font-medium">
                     Extracting project files
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
-                  <div
-                    className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"
-                    style={{ animationDelay: "0.2s" }}
-                  ></div>
-                  <span className="text-gray-700">Scanning code patterns</span>
+                  <div className="w-6 h-6 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                  </div>
+                  <span className="text-slate-700 font-medium">
+                    Scanning code patterns
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
-                  <div
-                    className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"
-                    style={{ animationDelay: "0.4s" }}
-                  ></div>
-                  <span className="text-gray-700">Detecting code smells</span>
+                  <div className="w-6 h-6 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                  </div>
+                  <span className="text-slate-400">Detecting code smells</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
-                  <div
-                    className="w-2 h-2 bg-pink-500 rounded-full animate-pulse"
-                    style={{ animationDelay: "0.6s" }}
-                  ></div>
-                  <span className="text-gray-700">Generating report</span>
+                  <div className="w-6 h-6 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                  </div>
+                  <span className="text-slate-400">Generating report</span>
                 </div>
               </div>
 
               {/* Loading bar */}
-              <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-[shimmer_2s_ease-in-out_infinite]"
-                  style={{
-                    width: "100%",
-                    backgroundSize: "200% 100%",
-                  }}
+                  className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full animate-pulse"
+                  style={{ width: "60%" }}
                 ></div>
               </div>
 
-              <p className="text-xs text-gray-500 italic">
+              <p className="text-xs text-slate-400">
                 This may take a few moments...
               </p>
             </div>
@@ -295,255 +306,330 @@ export default function UploadProjectPage() {
         </DialogContent>
       </Dialog>
 
-      <div className="flex items-center gap-2 mb-6 max-w-xl mx-auto">
-        <Link href="/">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 text-[#24292f] hover:bg-[#f6f8fa]"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-        </Link>
-        <h1 className="text-2xl font-semibold text-[#24292f]">
-          Upload New Project
-        </h1>
-      </div>
+      <div className="max-w-2xl mx-auto mt-8">
+        {/* Header */}
+        <div className="flex items-center gap-4 mb-8">
+          <Link href="/dashboard">
+            <button className="p-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm">
+              <ArrowLeft className="h-5 w-5 text-slate-600" />
+            </button>
+          </Link>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800">
+              Upload New Project
+            </h1>
+            <p className="text-slate-500 text-sm">
+              Analyze your codebase for code smells
+            </p>
+          </div>
+        </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 max-w-xl mx-auto">
-        {/* Project Details Card */}
-        <Card className="bg-white border border-[#d0d7de] rounded-md shadow-sm">
-          <CardContent className="pt-6 space-y-4">
-            <div className="space-y-2">
-              <Label
-                htmlFor="project-name"
-                className="text-[#24292f] font-medium"
-              >
-                Project Name <span className="text-[#cf222e]">*</span>
-              </Label>
-              <Input
-                id="project-name"
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
-                className={cn(
-                  "bg-white border-[#d0d7de] text-[#24292f] placeholder:text-[#6e7781] focus:border-[#0969da] focus:ring-1 focus:ring-[#0969da]",
-                  errors.projectName && "border-[#cf222e]"
-                )}
-              />
-              {errors.projectName && (
-                <p className="text-[#cf222e] text-sm">{errors.projectName}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label
-                htmlFor="project-description"
-                className="text-[#24292f] font-medium"
-              >
-                Description <span className="text-[#cf222e]">*</span>
-              </Label>
-              <Textarea
-                id="project-description"
-                value={projectDescription}
-                onChange={(e) => setProjectDescription(e.target.value)}
-                className={cn(
-                  "bg-white border-[#d0d7de] text-[#24292f] placeholder:text-[#6e7781] focus:border-[#0969da] focus:ring-1 focus:ring-[#0969da] min-h-[100px]",
-                  errors.projectDescription && "border-[#cf222e]"
-                )}
-              />
-              {errors.projectDescription && (
-                <p className="text-[#cf222e] text-sm">
-                  {errors.projectDescription}
-                </p>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* File Upload Card */}
-        <Card className="bg-white border border-[#d0d7de] rounded-md shadow-sm">
-          <CardContent className="pt-6 space-y-4">
-            <Label className="text-[#24292f] font-medium">
-              Project File <span className="text-[#cf222e]">*</span>
-            </Label>
-            <div
-              className={cn(
-                "border-2 border-dashed rounded-md p-8 text-center cursor-pointer",
-                "bg-[#f6f8fa] transition-colors",
-                isDragging
-                  ? "border-[#0969da] bg-[#ddf4ff]"
-                  : "border-[#d0d7de]",
-                errors.file && "border-[#cf222e]"
-              )}
-              {...{
-                onDragOver: handleDragOver,
-                onDragLeave: handleDragLeave,
-                onDrop: handleDrop,
-              }}
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept=".zip"
-                onChange={handleFileChange}
-                className="hidden"
-              />
-              <div className="flex flex-col items-center gap-2">
-                <Upload className="h-10 w-10 text-[#6e7781]" />
-                <h3 className="text-lg font-medium text-[#24292f]">
-                  {selectedFile ? selectedFile.name : "Drag & Drop ZIP file"}
-                </h3>
-                <p className="text-[#6e7781] text-sm">
-                  {selectedFile
-                    ? `${(selectedFile.size / 1e6).toFixed(2)} MB`
-                    : "or click to browse"}
-                </p>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Project Details Card */}
+          <Card className="bg-white border border-slate-200 rounded-2xl shadow-lg shadow-slate-200/50 overflow-hidden py-0">
+            <div className="px-6 py-3 bg-slate-50 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <FileText className="h-4 w-4 text-blue-600" />
+                </div>
+                <h2 className="font-semibold text-slate-700">
+                  Project Details
+                </h2>
               </div>
             </div>
-            {errors.file && (
-              <p className="text-[#cf222e] text-sm">{errors.file}</p>
-            )}
-          </CardContent>
-        </Card>
+            <CardContent className="p-6 space-y-5">
+              <div className="space-y-2">
+                <Label
+                  htmlFor="project-name"
+                  className="text-sm font-semibold text-slate-700"
+                >
+                  Project Name <span className="text-rose-500">*</span>
+                </Label>
+                <Input
+                  id="project-name"
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                  placeholder="My Awesome Project"
+                  className={cn(
+                    "rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all",
+                    errors.projectName &&
+                      "border-rose-300 focus:border-rose-500 focus:ring-rose-500/10"
+                  )}
+                />
+                {errors.projectName && (
+                  <p className="text-rose-600 text-sm flex items-center gap-1">
+                    <AlertCircle className="h-4 w-4" />
+                    {errors.projectName}
+                  </p>
+                )}
+              </div>
 
-        {/* Team Members Card */}
-        <Card className="bg-white border border-[#d0d7de] rounded-md shadow-sm">
-          <CardContent className="pt-6 space-y-4">
-            <Label className="text-[#24292f] font-medium">Team Members</Label>
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-[#6e7781]" />
-              <Input
-                placeholder="Search users..."
-                className="pl-9 bg-white border-[#d0d7de] text-[#24292f] placeholder:text-[#6e7781] focus:border-[#0969da] focus:ring-1 focus:ring-[#0969da]"
-                value={searchQuery}
-                onChange={handleSearch}
-              />
+              <div className="space-y-2">
+                <Label
+                  htmlFor="project-description"
+                  className="text-sm font-semibold text-slate-700"
+                >
+                  Description <span className="text-rose-500">*</span>
+                </Label>
+                <Textarea
+                  id="project-description"
+                  value={projectDescription}
+                  onChange={(e) => setProjectDescription(e.target.value)}
+                  placeholder="Describe what your project does..."
+                  className={cn(
+                    "rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all min-h-[120px] resize-none",
+                    errors.projectDescription &&
+                      "border-rose-300 focus:border-rose-500 focus:ring-rose-500/10"
+                  )}
+                />
+                {errors.projectDescription && (
+                  <p className="text-rose-600 text-sm flex items-center gap-1">
+                    <AlertCircle className="h-4 w-4" />
+                    {errors.projectDescription}
+                  </p>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* File Upload Card */}
+          <Card className="bg-white border border-slate-200 rounded-2xl shadow-lg shadow-slate-200/50 overflow-hidden py-0">
+            <div className="px-6 py-3 bg-slate-50 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-emerald-100 rounded-lg">
+                  <FolderUp className="h-4 w-4 text-emerald-600" />
+                </div>
+                <h2 className="font-semibold text-slate-700">Project Files</h2>
+              </div>
             </div>
+            <CardContent className="p-6">
+              <div
+                className={cn(
+                  "relative border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-200",
+                  isDragging
+                    ? "border-blue-500 bg-blue-50"
+                    : selectedFile
+                    ? "border-emerald-300 bg-emerald-50"
+                    : "border-slate-200 bg-slate-50/50 hover:border-blue-400 hover:bg-blue-50/50",
+                  errors.file && "border-rose-300 bg-rose-50"
+                )}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".zip"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+                <div className="flex flex-col items-center gap-4">
+                  {selectedFile ? (
+                    <>
+                      <div className="p-4 bg-emerald-100 rounded-2xl">
+                        <FileArchive className="h-10 w-10 text-emerald-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-slate-800">
+                          {selectedFile.name}
+                        </h3>
+                        <p className="text-slate-500 text-sm">
+                          {(selectedFile.size / 1e6).toFixed(2)} MB
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedFile(null);
+                        }}
+                        className="text-sm text-rose-600 hover:text-rose-700 font-medium flex items-center gap-1"
+                      >
+                        <X className="h-4 w-4" />
+                        Remove file
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <div className="p-4 bg-slate-100 rounded-2xl group-hover:bg-blue-100 transition-colors">
+                        <Upload className="h-10 w-10 text-slate-400" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-slate-800">
+                          Drag & drop your ZIP file here
+                        </h3>
+                        <p className="text-slate-500 text-sm mt-1">
+                          or click to browse files
+                        </p>
+                      </div>
+                      <span className="px-4 py-2 bg-blue-600 text-white rounded-xl font-medium text-sm hover:bg-blue-700 transition-colors">
+                        Select File
+                      </span>
+                    </>
+                  )}
+                </div>
+              </div>
+              {errors.file && (
+                <p className="text-rose-600 text-sm flex items-center gap-1 mt-3">
+                  <AlertCircle className="h-4 w-4" />
+                  {errors.file}
+                </p>
+              )}
+            </CardContent>
+          </Card>
 
-            {searchQuery.length > 1 && (
-              <Card className="mt-2 bg-white border border-[#d0d7de] rounded-md shadow-sm">
-                <CardContent className="p-0">
+          {/* Team Members Card */}
+          <Card className="bg-white border border-slate-200 rounded-2xl shadow-lg shadow-slate-200/50 overflow-hidden py-0">
+            <div className="px-6 py-3 bg-slate-50 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-violet-100 rounded-lg">
+                  <Users className="h-4 w-4 text-violet-600" />
+                </div>
+                <h2 className="font-semibold text-slate-700">Team Members</h2>
+                <span className="text-xs text-slate-400">(Optional)</span>
+              </div>
+            </div>
+            <CardContent className="p-6 space-y-4">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                <Input
+                  placeholder="Search by username..."
+                  className="pl-12 rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
+                  value={searchQuery}
+                  onChange={handleSearch}
+                />
+              </div>
+
+              {searchQuery.length > 1 && (
+                <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
                   {isSearching ? (
-                    <div className="py-4 flex justify-center items-center">
-                      <Loader2 className="animate-spin text-[#6e7781]" />
+                    <div className="py-6 flex justify-center items-center">
+                      <Loader2 className="animate-spin text-slate-400 h-6 w-6" />
                     </div>
                   ) : searchResults.length > 0 ? (
                     <ScrollArea className="max-h-48">
                       {searchResults.map((user) => (
                         <div
                           key={user.id}
-                          className="p-2 flex justify-between items-center cursor-pointer hover:bg-[#f6f8fa]"
+                          className="p-3 flex justify-between items-center cursor-pointer hover:bg-white transition-colors border-b border-slate-100 last:border-0"
                           onClick={() => addMember(user)}
                         >
                           <div className="flex items-center gap-3">
-                            <Avatar className="h-8 w-8 border border-[#d0d7de]">
+                            <Avatar className="h-10 w-10 ring-2 ring-slate-200">
                               <AvatarImage
                                 src={user.photo || "/placeholder.svg"}
                                 alt={user.name}
                               />
-                              <AvatarFallback className="bg-[#f6f8fa] text-[#24292f]">
+                              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-semibold">
                                 {user.name[0]}
                               </AvatarFallback>
                             </Avatar>
                             <div>
-                              <p className="font-medium text-[#24292f]">
+                              <p className="font-semibold text-slate-800">
                                 {user.name}
                               </p>
-                              <p className="text-[#6e7781] text-xs">
+                              <p className="text-slate-500 text-sm">
                                 @
                                 {user.username ||
                                   user.name.toLowerCase().replace(/\s+/g, "_")}
                               </p>
                             </div>
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-[#0969da] hover:bg-[#ddf4ff] hover:text-[#0969da]"
-                          >
+                          <span className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors">
                             Add
-                          </Button>
+                          </span>
                         </div>
                       ))}
                     </ScrollArea>
                   ) : shouldShowNoUsersFound() ? (
-                    <div className="py-4 text-center text-[#6e7781]">
-                      <p>No users found</p>
-                      <p className="text-xs mt-1">Try different search terms</p>
+                    <div className="py-6 text-center">
+                      <p className="text-slate-500 font-medium">
+                        No users found
+                      </p>
+                      <p className="text-slate-400 text-sm mt-1">
+                        Try different search terms
+                      </p>
                     </div>
                   ) : null}
-                </CardContent>
-              </Card>
-            )}
+                </div>
+              )}
 
-            {selectedMembers.length > 0 && (
-              <div className="mt-4 space-y-2">
-                <h3 className="font-medium text-sm text-[#24292f]">
-                  Selected Members ({selectedMembers.length})
-                </h3>
-                {selectedMembers.map((member) => (
-                  <div
-                    key={member.id}
-                    className="p-2 flex justify-between items-center rounded-md border border-[#d0d7de] bg-[#f6f8fa]"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Avatar className="h-8 w-8 border border-[#d0d7de]">
-                        <AvatarImage
-                          src={member.photo || "/placeholder.svg"}
-                          alt={member.name}
-                        />
-                        <AvatarFallback className="bg-[#f6f8fa] text-[#24292f]">
-                          {member.name[0]}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="font-medium text-[#24292f]">
-                          {member.name}
-                        </p>
-                        <p className="text-[#6e7781] text-xs">
-                          @
-                          {member.username ||
-                            member.name.toLowerCase().replace(/\s+/g, "_")}
-                        </p>
+              {selectedMembers.length > 0 && (
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-sm text-slate-700 flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-emerald-500" />
+                    Selected Members ({selectedMembers.length})
+                  </h3>
+                  <div className="space-y-2">
+                    {selectedMembers.map((member) => (
+                      <div
+                        key={member.id}
+                        className="p-3 flex justify-between items-center rounded-xl border border-slate-200 bg-slate-50/50"
+                      >
+                        <div className="flex items-center gap-3">
+                          <Avatar className="h-10 w-10 ring-2 ring-slate-200">
+                            <AvatarImage
+                              src={member.photo || "/placeholder.svg"}
+                              alt={member.name}
+                            />
+                            <AvatarFallback className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-semibold">
+                              {member.name[0]}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <p className="font-semibold text-slate-800">
+                              {member.name}
+                            </p>
+                            <p className="text-slate-500 text-sm">
+                              @
+                              {member.username ||
+                                member.name.toLowerCase().replace(/\s+/g, "_")}
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className="p-2 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
+                          onClick={() => removeMember(member.id)}
+                        >
+                          <X className="h-5 w-5" />
+                        </button>
                       </div>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-[#cf222e] hover:bg-[#ffebe9] hover:text-[#cf222e]"
-                      onClick={() => removeMember(member.id)}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
+                    ))}
                   </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
-        {errors.submission && (
-          <div className="p-3 rounded-md bg-[#ffebe9] text-[#cf222e] text-sm border border-[#cf222e]">
-            {errors.submission}
-          </div>
-        )}
-
-        <Button
-          type="submit"
-          className="w-full bg-[#2da44e] hover:bg-[#2c974b] text-white border-none focus:ring-2 focus:ring-[#2da44e] focus:ring-offset-2 focus:ring-offset-white"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Creating and Analyzing Project...
-            </>
-          ) : (
-            "Create Project"
+          {errors.submission && (
+            <div className="p-4 rounded-xl bg-rose-50 text-rose-700 text-sm border border-rose-200 flex items-center gap-2">
+              <AlertCircle className="h-5 w-5 flex-shrink-0" />
+              {errors.submission}
+            </div>
           )}
-        </Button>
-      </form>
+
+          <Button
+            type="submit"
+            className="w-full rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold py-6 shadow-lg shadow-blue-500/25 transition-all"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Creating and Analyzing Project...
+              </span>
+            ) : (
+              <span className="flex items-center gap-2">
+                Create Project
+                <ArrowRight className="h-5 w-5" />
+              </span>
+            )}
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -28,7 +28,7 @@ export default function ProtectedRoute({
   return isAuthenticated ? (
     <SidebarProvider>
       <AppSidebar />
-      <div className="w-full py-4 px-6">{children}</div>
+      <div className="w-full ">{children}</div>
     </SidebarProvider>
   ) : null;
 }

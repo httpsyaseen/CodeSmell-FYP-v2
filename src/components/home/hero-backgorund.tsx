@@ -1,6 +1,6 @@
 const HeroBackground = () => {
   return (
-    <div className="w-full max-w-[1440px] mx-auto flex justify-center absolute">
+    <div className="w-full max-w-[1440px] mx-auto flex justify-center absolute inset-0 z-0 pointer-events-none">
       <svg
         width="1366"
         height="725"

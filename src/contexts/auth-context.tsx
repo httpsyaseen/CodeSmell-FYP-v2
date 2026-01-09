@@ -27,6 +27,8 @@ type AuthContextType = {
   login: (email: string, password: string) => Promise<void>;
   signup: (formData: FormData) => Promise<void>;
   logout: () => void;
+  refreshUser: () => Promise<void>;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 };
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -43,6 +45,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsAuthenticated(false);
     router.push("/login");
   }, [router]);
+
+  const refreshUser = useCallback(async () => {
+    try {
+      const { data } = await api.get(`/user/verify`);
+      setUser(data.user);
+    } catch (error) {
+      console.error("Failed to refresh user:", error);
+    }
+  }, []);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -113,6 +124,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isLoading,
         signup,
         logout,
+        refreshUser,
+        setUser,
       }}
     >
       {children}

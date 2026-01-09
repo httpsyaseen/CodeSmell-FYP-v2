@@ -6,15 +6,16 @@ import { motion } from "framer-motion";
 import BenefitsSection from "@/components/home/benefits";
 import { useRouter } from "next/navigation";
 import HeroBackground from "@/components/home/hero-backgorund";
+import Link from "next/link";
 
 export default function Home() {
   const router = useRouter();
   return (
-    <div className="flex min-h-screen flex-col px-14  bg-gray-50 dark:bg-[#040820] dark:text-white">
+    <div className="flex min-h-screen flex-col   bg-gray-50 dark:bg-[#040820] dark:text-white">
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-40 bg-[#f3f6fb ] bg-gradient-to-t from-blue-100 from-50% to-gray-50 relative">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-40 bg-[#f3f6fb] bg-gradient-to-t from-blue-100 from-50% to-gray-50 relative overflow-hidden">
           <HeroBackground />
-          <div className="container px-4 md:px-6 mx-auto">
+          <div className="container px-4 md:px-6 mx-auto relative z-10">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <motion.div
                 className="flex flex-col justify-center space-y-4"
@@ -27,19 +28,19 @@ export default function Home() {
                     Detect Code Smells & Refactor with Confidence
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    AI-generated or written by humans, Sonar’s Clean Code
-                    Solutions cover your code quality needs, improving code
+                    Code Doctor analyzes your codebase to detect code smells and
+                    provides intelligent refactoring suggestions, improving code
                     reliability, maintainability, and security.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Button
-                    className="bg-[#126ed3] hover:bg-blue-700 text-white cursor-pointer"
-                    onClick={() => router.push("/login")}
+                  <Link
+                    href={"/login"}
+                    className="bg-[#126ed3] hover:bg-blue-700 text-white cursor-pointer border-md text-base w-auto px-4 py-2 rounded-md flex items-center justify-center font-medium transition"
                   >
                     Get Started
                     <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+                  </Link>
                 </div>
               </motion.div>
               <motion.div
